@@ -1,0 +1,64 @@
+void upShift :: shiftToFirst() {
+    int currentGear = getCurrentGear();
+    int engineSpeed = getEngineSpeed();
+    int wheelSpeed = getWheelSpeed();
+    bool isNeutral = isNeutralSwitchEngaged();
+    bool clutchIn = isClutchIn();
+
+    if (isNeutral == true && clutchIn == true && wheelSpeed <= 5000) {
+        // Conditions met for shifting to 1st gear from neutral
+        shiftToGear(1);
+    } else {
+        shiftToFirst();
+    }
+}
+
+
+
+
+
+
+
+
+void upShift :: downShift() {
+    int currentGear = getCurrentGear();
+    int engineSpeed = getEngineSpeed();
+    int wheelSpeed = getWheelSpeed();
+    int throttlePosition = getThrottlePosition();
+    bool gearEngaged = isGearEngaged();
+
+    if (engineSpeed < 9000 /* && wheelSpeed realtes to engineSpeed correctly*/&& throttlePosition > 30 && gearEngaged == true) {
+    
+        shiftToGear(currentGear - 1);
+    } else {
+        downShift();
+    }
+}
+
+
+
+void  upShift :: shiftToNeutral() {
+    int currentGear = getCurrentGear();
+    bool clutchIn = isClutchIn();
+    bool block = isBlockInPlace();
+bool switch = isSwitchEngaged();
+
+    if (currentGear == 1 && clutchIn) {
+        // Wait until neutral block goes into place
+        
+        while (block == false)) {
+            // Wait for neutral block to engage
+            delay(10);
+        }
+
+        // Move slowly until neutral switch engages
+        while (switch == false){
+            // Move slowly
+        }
+
+        // Conditions met for shifting to neutral from 1st gear
+        shiftToNeutral();
+    } else {
+        shiftToNeutral();
+    }
+}
