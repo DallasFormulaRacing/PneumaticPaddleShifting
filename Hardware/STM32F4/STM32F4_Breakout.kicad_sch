@@ -5744,12 +5744,6 @@
 		(uuid "6b7c0012-b315-4c2b-89b3-19be2170d2fa")
 	)
 	(junction
-		(at 114.3 146.05)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "767c432a-9269-452a-a772-13675114c23d")
-	)
-	(junction
 		(at 40.64 27.94)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5834,102 +5828,6 @@
 		(uuid "fa615cc7-34ae-4ae7-9eb4-a869788ae038")
 	)
 	(no_connect
-		(at 40.64 144.78)
-		(uuid "00385824-3598-4a95-857b-064e14c35c54")
-	)
-	(no_connect
-		(at 40.64 139.7)
-		(uuid "0b2be5e3-01e9-4c5d-82ee-fbf01d8a33c4")
-	)
-	(no_connect
-		(at 40.64 111.76)
-		(uuid "1027afba-64ad-4277-8227-900d25876bd8")
-	)
-	(no_connect
-		(at 40.64 119.38)
-		(uuid "122ffd21-3683-4bc7-be0f-42fbdc98267a")
-	)
-	(no_connect
-		(at 76.2 116.84)
-		(uuid "1b0313ce-c258-449b-9c4c-58f873b097d3")
-	)
-	(no_connect
-		(at 40.64 142.24)
-		(uuid "1e0e93db-a12c-42ea-9e0d-c41e24c1d0b6")
-	)
-	(no_connect
-		(at 40.64 127)
-		(uuid "21c47c70-3291-40f4-a2c5-5276e5d62cb0")
-	)
-	(no_connect
-		(at 76.2 149.86)
-		(uuid "24fcb96d-fe74-41af-bd0a-3ef2cec882c2")
-	)
-	(no_connect
-		(at 40.64 124.46)
-		(uuid "2a110150-57df-4092-b9ae-df47da6e7e1c")
-	)
-	(no_connect
-		(at 40.64 147.32)
-		(uuid "32d4de11-43b8-4b84-8bad-5c05daca7c43")
-	)
-	(no_connect
-		(at 76.2 139.7)
-		(uuid "36f95b3b-857f-4978-b40b-37a849681517")
-	)
-	(no_connect
-		(at 40.64 134.62)
-		(uuid "3e9d600e-4d84-4aa7-9568-ec13c8964925")
-	)
-	(no_connect
-		(at 76.2 111.76)
-		(uuid "537eeb19-f03e-4dea-9b90-bd3de6862125")
-	)
-	(no_connect
-		(at 76.2 93.98)
-		(uuid "5beede1b-3950-47d4-93e5-b7b051c4ce07")
-	)
-	(no_connect
-		(at 76.2 119.38)
-		(uuid "5e10dd5d-8016-4f62-8fbc-751cb21c90e7")
-	)
-	(no_connect
-		(at 76.2 101.6)
-		(uuid "62111f7b-dc89-4358-a32b-5913935f60a6")
-	)
-	(no_connect
-		(at 40.64 152.4)
-		(uuid "63b9d188-8d25-4fae-b18d-2a10464f8e54")
-	)
-	(no_connect
-		(at 76.2 96.52)
-		(uuid "6d5f9407-2c20-423f-9926-7ff1d3cdee5f")
-	)
-	(no_connect
-		(at 76.2 172.72)
-		(uuid "6ea7794f-33fb-4dc3-a771-a678955678ac")
-	)
-	(no_connect
-		(at 76.2 104.14)
-		(uuid "802ab378-c9ad-4341-b034-dfa24de2c475")
-	)
-	(no_connect
-		(at 76.2 109.22)
-		(uuid "828616bd-e877-4387-8495-e4e5c6a70ec6")
-	)
-	(no_connect
-		(at 76.2 132.08)
-		(uuid "8605772e-a042-4be9-9724-de36a33c81a2")
-	)
-	(no_connect
-		(at 76.2 137.16)
-		(uuid "98cf0161-4ed2-417a-93df-ab6f8c04bbeb")
-	)
-	(no_connect
-		(at 76.2 142.24)
-		(uuid "9c74e874-b12e-43ff-813b-a88f2051f262")
-	)
-	(no_connect
 		(at 198.12 72.39)
 		(uuid "b3b5b573-1e70-4112-9c81-eddd95c3935a")
 	)
@@ -5938,60 +5836,16 @@
 		(uuid "b7555507-b58b-4eab-82f7-d085870b7e3c")
 	)
 	(no_connect
-		(at 40.64 116.84)
-		(uuid "b8770c5e-5531-414f-9a1a-cfec58fe0445")
-	)
-	(no_connect
 		(at 109.22 31.75)
 		(uuid "b9d51b1c-52ea-49df-81a3-0ec583d5b4a7")
-	)
-	(no_connect
-		(at 76.2 106.68)
-		(uuid "bdf33390-b203-4ff5-8f69-876ac7dfa40e")
-	)
-	(no_connect
-		(at 76.2 147.32)
-		(uuid "c4f3ef71-5f3a-491c-8a61-ccf1fbdfbf33")
-	)
-	(no_connect
-		(at 40.64 154.94)
-		(uuid "c61e47e8-6650-4e46-929a-dbd0df94db90")
-	)
-	(no_connect
-		(at 40.64 149.86)
-		(uuid "ca5115ea-4871-4ee3-9aef-46d5a4a8336f")
-	)
-	(no_connect
-		(at 40.64 132.08)
-		(uuid "cdd12bc7-0dc1-4556-acee-b5484fc8bdff")
 	)
 	(no_connect
 		(at 210.82 72.39)
 		(uuid "dc3dfbe9-56f4-4584-bbf5-dac27adeb706")
 	)
 	(no_connect
-		(at 40.64 137.16)
-		(uuid "e43a88dc-502c-41c3-a42a-ad088a145724")
-	)
-	(no_connect
-		(at 76.2 175.26)
-		(uuid "ef94ccb2-7666-43cd-bd79-e7fc75ebd1a2")
-	)
-	(no_connect
-		(at 40.64 129.54)
-		(uuid "efe07262-b90a-46ec-88ad-073e0c850559")
-	)
-	(no_connect
 		(at 109.22 36.83)
 		(uuid "f0828fc7-7dee-4dcd-a0a5-3bfc597792f2")
-	)
-	(no_connect
-		(at 76.2 114.3)
-		(uuid "f8e4eeb5-f250-47e5-861b-acf28d02ad73")
-	)
-	(no_connect
-		(at 40.64 121.92)
-		(uuid "fef8f821-27ca-44b6-bf4e-dbcc9adc5e0d")
 	)
 	(wire
 		(pts
@@ -7195,16 +7049,6 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 143.51) (xy 114.3 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "94281637-625f-4704-a9a9-0886dc1d1fe1")
-	)
-	(wire
-		(pts
 			(xy 58.42 185.42) (xy 58.42 187.96)
 		)
 		(stroke
@@ -7875,7 +7719,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 146.05) (xy 114.3 152.4)
+			(xy 114.3 143.51) (xy 114.3 152.4)
 		)
 		(stroke
 			(width 0)
