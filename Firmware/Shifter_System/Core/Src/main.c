@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "../../Program/Src/app.hpp"
+#include "retarget.h"
 
 /* USER CODE END Includes */
 

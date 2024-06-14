@@ -14,19 +14,22 @@
 // ST HAL Dependencies
 #include "gpio.h"
 
-// 3rd Party Libraryes and Frameworks
+#include "usart.h"
+extern UART_HandleTypeDef huart2;
 
 
 // DFR Custom Dependencies
-
+#include "../../Core/Inc/retarget.h"
 
 
 void cppMain() {
-
+	// Enable `printf()` using USART
+	RetargetInit(&huart2);
 
 
 	for(;;){
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		printf("hi\n");
 		HAL_Delay(1000);
 	}
 }
