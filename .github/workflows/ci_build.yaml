@@ -1,0 +1,21 @@
+name: CI Build
+
+# Define the trigger event(s)
+on: push
+
+# Jobs run in parallel by default, each runs steps in sequence
+jobs:
+
+    compile-firmware:
+        runs-on: ubuntu-latest
+        steps:
+        
+          - name: Check out this repo and submodules
+            uses: actions/checkout@v3
+          
+          - name: Build stm32CubeIDE project
+            uses: xanderhendriks/action-build-stm32cubeide@v10.0
+            with:
+              project-path: 'Firmware/Shifter_System'
+              project-target: 'Shifter_System/Debug'
+            
