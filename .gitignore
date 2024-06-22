@@ -1,2 +1,5 @@
 # Unit test builds
 Firmware/Tests/build/
+
+# stm32 on CubeIDE firmware builds
+Firmware/Shifter_System/Debug/
