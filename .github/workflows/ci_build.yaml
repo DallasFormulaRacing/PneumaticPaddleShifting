@@ -31,7 +31,7 @@ jobs:
 
             - name: Build and run unit tests
               run: |
-                  cd Tests
+                  cd Firmware/Tests
                   cmake -G "Ninja" -S . -B ./build
                   cd build
                   ninja
