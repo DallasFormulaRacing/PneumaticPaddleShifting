@@ -20,6 +20,12 @@ enable_testing()
 add_executable(
   shifter-unit-tests
   Src/hello_test.cc
+
+  # Shift Controller Tests
+  ../Shifter_System/Program/Src/Application/ShiftController/shift_controller.hpp
+  ../Shifter_System/Program/Src/Application/ShiftController/shift_controller.cpp
+  Src/Application/shift_controller_tests.cpp
+
 )
 
 # Linking with `gtest_main` instead of `gtest` allows us to bypass having

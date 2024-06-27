@@ -8,15 +8,6 @@
 namespace application {
 
 class ShiftController {
-public:
-
-	ShiftController();
-
-	~ShiftController();
-
-	void Run();
-
-
 protected:
 	class State {
 	public:
@@ -65,15 +56,25 @@ protected:
 		virtual void Exit(ShiftController& context) override;
 	};
 
+	State* current_state_{&neutral_state_};
+
+public:
+	ShiftController();
+
+	~ShiftController();
+
+	void Run();
+
+	State* GetState() { return current_state_; }
+
+	
+
 private:
 	void SetState(State* new_state);
-
-
 	LowGear low_gear_state_;
 	Neutral neutral_state_;
 	MidGear mid_gear_state_;
 	HighGear high_gear_state_;
-	State* current_state_{&neutral_state_};
 };
 
 } // namespace application

@@ -18,4 +18,23 @@ jobs:
             with:
               project-path: 'Firmware/Shifter_System'
               project-target: 'Shifter_System/Debug'
+
+    run-unit-tests:
+        runs-on: ubuntu-latest
+        steps:
+
+            - name: Check out this repo
+              uses: actions/checkout@v3
+
+            - name: Install Ninja
+              run: sudo apt-get install ninja-build
+
+            - name: Build and run unit tests
+              run: |
+                  cd Tests
+                  cmake -G "Ninja" -S . -B ./build
+                  cd build
+                  ninja
+                  ./shifter-unit-tests
+             
             
