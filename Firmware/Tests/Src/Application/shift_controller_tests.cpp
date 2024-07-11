@@ -9,6 +9,14 @@ namespace application {
 
 class ShiftControllerWrapper : public ShiftController {
 public:
+
+    int16_t rpm_;
+	std::array<float, 2> wheel_speeds_;
+
+    ShiftControllerWrapper()
+      : ShiftController(rpm_,
+                        wheel_speeds_) { }
+
     bool IsLowGearState() { return dynamic_cast<LowGear*>(current_state_) != nullptr; }
     bool IsNeutralState() { return dynamic_cast<Neutral*>(current_state_) != nullptr; }
     bool IsMidGearState() { return dynamic_cast<MidGear*>(current_state_) != nullptr; }

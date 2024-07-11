@@ -102,6 +102,7 @@ void cppMain() {
 			can_bus->EnableInterruptMode();
 		}
 
+		shift_controller.Run();
 
 	}
 }

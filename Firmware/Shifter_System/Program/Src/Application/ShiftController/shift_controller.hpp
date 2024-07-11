@@ -61,8 +61,7 @@ protected:
 	};
 
 	State* current_state_{&neutral_state_};
-	int16_t& rpm_;
-	std::array<float, 2>& wheel_speeds_;
+	
 
 public:
 	ShiftController(int16_t &rpm_observer,
@@ -75,13 +74,15 @@ public:
 	State* GetState() { return current_state_; }
 
 	
-
 private:
 	void SetState(State* new_state);
 	LowGear low_gear_state_;
 	Neutral neutral_state_;
 	MidGear mid_gear_state_;
 	HighGear high_gear_state_;
+
+	int16_t& rpm_;
+	std::array<float, 2>& wheel_speeds_;
 };
 
 } // namespace application
