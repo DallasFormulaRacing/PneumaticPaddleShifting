@@ -4,6 +4,10 @@
 
 // Standard Libraries
 #include <cstdio>
+#include <cinttypes>
+
+#include <array>
+
 
 namespace application {
 
@@ -57,9 +61,12 @@ protected:
 	};
 
 	State* current_state_{&neutral_state_};
+	int16_t& rpm_;
+	std::array<float, 2>& wheel_speeds_;
 
 public:
-	ShiftController();
+	ShiftController(int16_t &rpm_observer,
+					std::array<float, 2> &wheel_speeds_observer);
 
 	~ShiftController();
 

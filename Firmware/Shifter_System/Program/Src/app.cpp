@@ -26,6 +26,7 @@ extern CAN_HandleTypeDef hcan1;
 // DFR Custom Dependencies
 #include "app.hpp"
 #include "../../Core/Inc/retarget.h"
+#include "Application/ShiftController/shift_controller.hpp"
 #include "./Platform/STM/F4/CAN/bxcan_stmf4.hpp"
 #include "./Platform/Interfaces/ican.hpp"
 #include "./Sensor/ECU/PE3/iecu.hpp"
@@ -71,11 +72,14 @@ void cppMain() {
 	bx_can_peripheral->ConfigureReceiveCallback(rx_interrupt_mode);
 	bx_can_peripheral->EnableInterruptMode();
 
-	int16_t rpm;
+	int16_t rpm = 0;
 	std::array<float, 2> wheel_speeds;
+
+	application::ShiftController shift_controller(rpm, wheel_speeds);
 
 	for(;;){
 
+		// Check for updated CAN messages
 		if (pe3_ecu.NewMessageArrived()) {
 			can_bus->DisableInterruptMode();
 

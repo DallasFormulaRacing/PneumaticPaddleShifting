@@ -3,7 +3,10 @@
 
 namespace application {
 
-ShiftController::ShiftController() { }
+
+ShiftController::ShiftController(int16_t &rpm_observer,
+				std::array<float, 2> &wheel_speeds_observer)
+  : rpm_(rpm_observer), wheel_speeds_(wheel_speeds_observer) {}
 
 ShiftController::~ShiftController() { }
 
