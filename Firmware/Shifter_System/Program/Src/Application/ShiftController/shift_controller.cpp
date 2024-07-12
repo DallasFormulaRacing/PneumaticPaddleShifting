@@ -34,7 +34,7 @@ void ShiftController::LowGear::Enter(ShiftController& context) {
 }
 
 void ShiftController::LowGear::Compute(ShiftController& context) {
-
+	
 }
 
 void ShiftController::LowGear::Exit(ShiftController& context) {
@@ -50,7 +50,9 @@ void ShiftController::Neutral::Enter(ShiftController& context) {
 }
 
 void ShiftController::Neutral::Compute(ShiftController& context) {
-
+	if(context.neutral_switch_->Read()) {
+		context.SetState(&context.low_gear_state_);
+	}
 }
 
 void ShiftController::Neutral::Exit(ShiftController& context) {
