@@ -7,6 +7,11 @@
 #include <cinttypes>
 
 #include <array>
+#include <memory>
+
+
+// Custom DFR Libraries
+#include "../../Platform/Interfaces/igpio.hpp"
 
 
 namespace application {
@@ -65,7 +70,8 @@ protected:
 
 public:
 	ShiftController(int16_t &rpm_observer,
-					std::array<float, 2> &wheel_speeds_observer);
+					std::array<float, 2> &wheel_speeds_observer,
+					std::shared_ptr<platform::IGpio> neutral_switch_observer);
 
 	~ShiftController();
 
@@ -83,6 +89,7 @@ private:
 
 	int16_t& rpm_;
 	std::array<float, 2>& wheel_speeds_;
+	std::shared_ptr<platform::IGpio> neutral_switch_;
 };
 
 } // namespace application

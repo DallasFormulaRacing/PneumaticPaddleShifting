@@ -28,7 +28,9 @@ extern CAN_HandleTypeDef hcan1;
 #include "../../Core/Inc/retarget.h"
 #include "Application/ShiftController/shift_controller.hpp"
 #include "./Platform/STM/F4/CAN/bxcan_stmf4.hpp"
+#include "./Platform/STM/F4/GPIO/gpio_stmf4.hpp"
 #include "./Platform/Interfaces/ican.hpp"
+#include "./Platform/Interfaces/igpio.hpp"
 #include "./Sensor/ECU/PE3/iecu.hpp"
 #include "./Sensor/ECU/PE3/pe3.hpp"
 
@@ -75,7 +77,10 @@ void cppMain() {
 	int16_t rpm = 0;
 	std::array<float, 2> wheel_speeds;
 
-	application::ShiftController shift_controller(rpm, wheel_speeds);
+	// TODO: initialize GPIO with proper pins and setup interrupt callback
+	auto neutral_switch = std::make_shared<platform::GpioStmF4>(GPIOF, GPIO_PIN_15);
+
+	application::ShiftController shift_controller(rpm, wheel_speeds, neutral_switch);
 
 	for(;;){
 
