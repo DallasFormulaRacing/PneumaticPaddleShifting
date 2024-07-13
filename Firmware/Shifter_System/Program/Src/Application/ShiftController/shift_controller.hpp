@@ -70,26 +70,42 @@ protected:
 
 public:
 	ShiftController(int16_t &rpm_observer,
+					float &tps_observer,
 					std::array<float, 2> &wheel_speeds_observer,
-					std::shared_ptr<platform::IGpio> neutral_switch_observer);
+					std::shared_ptr<platform::IGpio> neutral_monitor,
+					std::shared_ptr<platform::IGpio> upshift_paddle,
+					std::shared_ptr<platform::IGpio> downshift_paddle,
+					std::shared_ptr<platform::IGpio> neutral_button);
 
 	~ShiftController();
 
 	void Run();
 
 	State* GetState() { return current_state_; }
-
+	
 	
 private:
 	void SetState(State* new_state);
+	bool NeutralEngaged();
+	bool UpshiftRequested();
+	bool UpshiftConditions();
+	bool DownshiftRequested();
+	bool DownshiftConditions();
+
 	LowGear low_gear_state_;
 	Neutral neutral_state_;
 	MidGear mid_gear_state_;
 	HighGear high_gear_state_;
 
 	int16_t& rpm_;
+	float& tps_;
 	std::array<float, 2>& wheel_speeds_;
-	std::shared_ptr<platform::IGpio> neutral_switch_;
+	std::shared_ptr<platform::IGpio> neutral_monitor_;
+	
+	// Steering wheel
+	std::shared_ptr<platform::IGpio> upshift_paddle_;
+	std::shared_ptr<platform::IGpio> downshift_paddle_;
+	std::shared_ptr<platform::IGpio> neutral_button_;
 };
 
 } // namespace application

@@ -75,12 +75,24 @@ void cppMain() {
 	bx_can_peripheral->EnableInterruptMode();
 
 	int16_t rpm = 0;
-	std::array<float, 2> wheel_speeds;
+	float tps = 0.0f;
+	std::array<float, 2> wheel_speeds {0.0f, 0.0f};
 
 	// TODO: initialize GPIO with proper pins and setup interrupt callback
-	auto neutral_switch = std::make_shared<platform::GpioStmF4>(GPIOF, GPIO_PIN_15);
+	auto neutral_monitor = std::make_shared<platform::GpioStmF4>(GPIOF, GPIO_PIN_15);
+	auto upshift_paddle = std::make_shared<platform::GpioStmF4>(GPIOF, GPIO_PIN_15);
+	auto downshift_paddle = std::make_shared<platform::GpioStmF4>(GPIOF, GPIO_PIN_15);
+	auto neutral_button = std::make_shared<platform::GpioStmF4>(GPIOF, GPIO_PIN_15);
 
-	application::ShiftController shift_controller(rpm, wheel_speeds, neutral_switch);
+	application::ShiftController shift_controller(
+		rpm,
+		tps,
+		wheel_speeds,
+		neutral_monitor,
+		upshift_paddle,
+		downshift_paddle,
+		neutral_button
+	);
 
 	for(;;){
 
@@ -96,11 +108,14 @@ void cppMain() {
 			case FramePe1Id:
 				printf("[ECU] PE1 arrived\n");
 				rpm = pe3_ecu.Rpm();
+				tps = pe3_ecu.Tps();
+				break;
 
 			case FramePe13Id:
 				printf("[ECU] PE13 arrived\n");
 				wheel_speeds[0] = pe3_ecu.DrivenWheelSpeed(0);
 				wheel_speeds[1] = pe3_ecu.DrivenWheelSpeed(1);
+				break;
 			}
 
 
