@@ -65,7 +65,15 @@ protected:
 		virtual void Exit(ShiftController& context) override;
 	};
 
+	bool UpshiftConditions();
+	bool DownshiftConditions();
+
 	State* current_state_{&neutral_state_};
+	LowGear low_gear_state_;
+	Neutral neutral_state_;
+	MidGear mid_gear_state_;
+	HighGear high_gear_state_;
+
 	
 
 public:
@@ -88,15 +96,10 @@ private:
 	void SetState(State* new_state);
 	bool NeutralEngaged();
 	bool UpshiftRequested();
-	bool UpshiftConditions();
 	bool DownshiftRequested();
-	bool DownshiftConditions();
+	
 
-	LowGear low_gear_state_;
-	Neutral neutral_state_;
-	MidGear mid_gear_state_;
-	HighGear high_gear_state_;
-
+	
 	int16_t& rpm_;
 	float& tps_;
 	std::array<float, 2>& wheel_speeds_;

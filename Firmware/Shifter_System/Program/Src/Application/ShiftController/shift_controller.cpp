@@ -51,15 +51,15 @@ bool ShiftController::UpshiftConditions() {
 
 
 	return (gear_num < 6) &&			// Gear below 6th
-			!NeutralEngaged() &&		// Car not in neutral
+			!NeutralEngaged() &&				// Car not in neutral
 			(rpm_ > 5000)  &&			// Engine speed above 5000
 			wheel_speed_close_enough;	// Wheel speed close to engine speed for current gear
 }
 
 
 bool ShiftController::DownshiftRequested() {
-	return upshift_paddle_->ToggleDetected() &&
-		   upshift_paddle_->Read();
+	return downshift_paddle_->ToggleDetected() &&
+		   downshift_paddle_->Read();
 }
 
 bool ShiftController::DownshiftConditions() {
@@ -84,7 +84,19 @@ void ShiftController::LowGear::Enter(ShiftController& context) {
 }
 
 void ShiftController::LowGear::Compute(ShiftController& context) {
+	// TODO: Add the folllowing conditions (or actions?)
+	//			- Wait until neutral block goes into place
+	//			- Move slowly until neutral monitor engages
+	if (context.DownshiftRequested()) {
 
+		context.SetState(&context.neutral_state_);
+	}
+
+
+	if (context.UpshiftRequested() && context.UpshiftConditions()) {
+
+		context.SetState(&context.mid_gear_state_);
+	}
 }
 
 void ShiftController::LowGear::Exit(ShiftController& context) {
@@ -100,7 +112,12 @@ void ShiftController::Neutral::Enter(ShiftController& context) {
 }
 
 void ShiftController::Neutral::Compute(ShiftController& context) {
-	if (context.UpshiftRequested() && context.UpshiftConditions()) {
+	// TODO: Add the folllowing conditions
+	//			- Wheel speed no higher than max for first (low) gear
+	//			- Check for gear engagement and try again
+	if (context.UpshiftRequested() &&
+		context.NeutralEngaged()) {
+
 		context.SetState(&context.low_gear_state_);
 	}
 }

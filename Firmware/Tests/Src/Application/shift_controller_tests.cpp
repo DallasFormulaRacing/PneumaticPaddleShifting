@@ -38,6 +38,13 @@ public:
     bool IsNeutralState() { return dynamic_cast<Neutral*>(current_state_) != nullptr; }
     bool IsMidGearState() { return dynamic_cast<MidGear*>(current_state_) != nullptr; }
     bool IsHighGearState() { return dynamic_cast<HighGear*>(current_state_) != nullptr; }
+
+    void SetLowGearState() { current_state_ = &low_gear_state_; }
+    void SetMidGearState() { current_state_ = &mid_gear_state_; }
+    void SetHighGearState() { current_state_ = &high_gear_state_; }
+
+    bool CheckUpshiftConditions() { return UpshiftConditions(); }
+    bool CheckDownshiftConditions() { return DownshiftConditions(); }
 };
 
 
@@ -63,16 +70,20 @@ protected:
         neutral_button_
     };
 
-    void PerformUpshiftRequest(bool is_requested) {
+    void PerformAndCheckUpshiftRequest(bool is_requested) {
         // Upshift interrupt. When idle, assume toggle detected in case of noise
         EXPECT_CALL(*upshift_paddle_, ToggleDetected()).Times(1).WillOnce(Return(true));
         EXPECT_CALL(*upshift_paddle_, Read()).Times(1).WillOnce(Return(is_requested));
     }
 
+    void PerformAndCheckDownshiftRequest(bool is_requested) {
+        // Downshift interrupt. When idle, assume toggle detected in case of noise
+        EXPECT_CALL(*downshift_paddle_, ToggleDetected()).Times(1).WillOnce(Return(true));
+        EXPECT_CALL(*downshift_paddle_, Read()).Times(1).WillOnce(Return(is_requested));
+    }
+
     void EngageNeutralMonitor(bool engage) {
-        EXPECT_CALL(*neutral_monitor_, Read())
-            .Times(1)
-            .WillOnce(Return(engage));
+        EXPECT_CALL(*neutral_monitor_, Read()).Times(1).WillOnce(Return(engage));
     }
 };
 
@@ -85,15 +96,11 @@ TEST_F(ShiftControllerFixture, Neutral_DefaultState) {
 }
 
 TEST_F(ShiftControllerFixture, Neutral_ToLowGear) {
+    // TODO: Update test case when UpshiftConditions() is fully implemented
     EXPECT_TRUE(shift_controller_.IsNeutralState());
 
-    rpm_ = 5001;
-    PerformUpshiftRequest(true);
-    
-    // Car not in neutral
-    EXPECT_CALL(*neutral_monitor_, Read())
-        .Times(1)
-        .WillOnce(Return(false));
+    PerformAndCheckUpshiftRequest(true);
+    EngageNeutralMonitor(true);
     
     shift_controller_.Run();
     EXPECT_TRUE(shift_controller_.IsLowGearState());
@@ -102,13 +109,138 @@ TEST_F(ShiftControllerFixture, Neutral_ToLowGear) {
 TEST_F(ShiftControllerFixture, Neutral_NoUpshiftRequest) {
     EXPECT_TRUE(shift_controller_.IsNeutralState());
 
-    PerformUpshiftRequest(false);
+    PerformAndCheckUpshiftRequest(false);
 
-    // No request occurred, so upshift conditions are not checked
+    // No request occurred, so neutral engagement is not checked
     EXPECT_CALL(*neutral_monitor_, Read()).Times(0);
     
     shift_controller_.Run();
     EXPECT_TRUE(shift_controller_.IsNeutralState());
+}
+
+TEST_F(ShiftControllerFixture, Neutral_IgnoreDownshiftRequest) {
+    EXPECT_TRUE(shift_controller_.IsNeutralState());
+
+    // User may possibly request a down shift, but the downshift_paddle
+    // is ignored during Neutral state
+    EXPECT_CALL(*downshift_paddle_, ToggleDetected()).Times(0);
+    EXPECT_CALL(*downshift_paddle_, Read()).Times(0);
+    
+    shift_controller_.Run();
+    EXPECT_TRUE(shift_controller_.IsNeutralState());
+}
+
+
+
+//**************************************************************************
+//				            LowGear State Cases
+//**************************************************************************
+TEST_F(ShiftControllerFixture, LowGear_ToNeutral) {
+    shift_controller_.SetLowGearState();
+    EXPECT_TRUE(shift_controller_.IsLowGearState());
+
+    PerformAndCheckDownshiftRequest(true);
+
+    shift_controller_.Run();
+    EXPECT_TRUE(shift_controller_.IsNeutralState());
+}
+
+TEST_F(ShiftControllerFixture, LowGear_ToMidGear) {
+    shift_controller_.SetLowGearState();
+    EXPECT_TRUE(shift_controller_.IsLowGearState());
+
+    rpm_ = 5001;
+    PerformAndCheckUpshiftRequest(true);
+
+    shift_controller_.Run();
+    EXPECT_TRUE(shift_controller_.IsMidGearState());
+}
+
+
+//**************************************************************************
+//				            MidGear State Cases
+//**************************************************************************
+TEST_F(ShiftControllerFixture, MidGear_ToLowGear) {
+    GTEST_SKIP() << "TODO:"
+                 << "\nImplement downshift."
+                 << "Track current physical gear. Must be at 2.";
+}
+
+TEST_F(ShiftControllerFixture, MidGear_ToHighGear) {
+    GTEST_SKIP() << "TODO:"
+                << "\nImplement upshift."
+                << "Track current physical gear. Must be at 5.";
+}
+
+
+//**************************************************************************
+//				            HighGear State Cases
+//**************************************************************************
+TEST_F(ShiftControllerFixture, HighGear_IgnoreUpshiftRequest) {
+    shift_controller_.SetHighGearState();
+    EXPECT_TRUE(shift_controller_.IsHighGearState());
+
+    // Ignore upshift paddle
+    EXPECT_CALL(*upshift_paddle_, ToggleDetected()).Times(0);
+    EXPECT_CALL(*upshift_paddle_, Read()).Times(0);
+
+    shift_controller_.Run();
+    EXPECT_TRUE(shift_controller_.IsHighGearState());
+}
+
+TEST_F(ShiftControllerFixture, HighGear_ToMidGear) {
+    GTEST_SKIP() << "TODO: \nImplement downshift.";
+}
+
+//**************************************************************************
+//				            Upshift Conditions
+//**************************************************************************
+TEST_F(ShiftControllerFixture, UpshiftConditions_Satisfied) {
+    // TODO: Update test case when UpshiftConditions() is fully implemented
+    rpm_ = 5001;
+    EXPECT_TRUE(shift_controller_.CheckUpshiftConditions());
+}
+
+TEST_F(ShiftControllerFixture, UpshiftConditions_GearAboveThreshold) {
+    GTEST_SKIP() << "TODO: Set gear to 6 and above. Should fail.";
+}
+
+TEST_F(ShiftControllerFixture, UpshiftConditions_InNeutral) {
+    GTEST_SKIP() << "TODO: Set car to neutral. Should fail.";
+}
+
+TEST_F(ShiftControllerFixture, UpshiftConditions_RpmTooLow) {
+    GTEST_SKIP() << "TODO: Set rpm to 5000 and above. Should fail.";
+}
+
+TEST_F(ShiftControllerFixture, UpshiftConditions_WheelSpeedNotCloseEnough) {
+    GTEST_SKIP() << "TODO: Set wheel speed and rpm far apart from each. Should fail.";
+}
+
+//**************************************************************************
+//				            Downshift Conditions
+//**************************************************************************
+TEST_F(ShiftControllerFixture, DownshiftConditions_Satisfied) {
+    // TODO: Update test case when DownshiftConditions() is fully implemented
+    rpm_ = 8999;
+    tps_ = 31.0f;
+    EXPECT_TRUE(shift_controller_.CheckDownshiftConditions());
+}
+
+TEST_F(ShiftControllerFixture, DownshiftConditions_RpmTooHigh) {
+    GTEST_SKIP() << "TODO: Set rpm at 9000 and above. Should fail.";
+}
+
+TEST_F(ShiftControllerFixture, DownshiftConditions_WheelSpeedNotCloseEnough) {
+    GTEST_SKIP() << "TODO: Set wheel speed and rpm far apart from each. Should fail.";
+}
+
+TEST_F(ShiftControllerFixture, DownshiftConditions_TpsTooLow) {
+    GTEST_SKIP() << "TODO: Set tps at 30.0f and below. Should fail.";
+}
+
+TEST_F(ShiftControllerFixture, DownshiftConditions_GearDisengaged) {
+    GTEST_SKIP() << "TODO: Set tps at 30.0f and below. Should fail.";
 }
 
 } // namespace application
