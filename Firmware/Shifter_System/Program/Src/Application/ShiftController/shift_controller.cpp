@@ -3,6 +3,44 @@
 
 namespace application {
 
+int ShiftController::getCurrentGear(){
+    float gearR[6] = {2.833, 2.062, 1.647, 1.421, 1.272, 1.173};
+    float wheelRPM = (DrivenWheelSpeed() * 60)/ 1.7083;
+    float gearRatio = Rpm/wheelRPM;
+    int foundGear = -1;
+    switch(gearRatio){
+    case gearR[0]: foundGear = 1;
+    break;
+    case gearR[1]: foundGear = 2;
+    break;
+    case gearR[2]: foundGear = 3;
+    break;
+    case gearR[3]: foundGear = 4;
+    break;
+    case gearR[4]: foundGear = 5;
+    break; 
+    case gearR[5]: foundGear = 6;
+    break;
+    }
+    if(foundGear != -1)
+        return foundGear;
+        
+        float prevDiff = 10000;
+        //int prevGear = 0;
+        for(int i = 0; i < 6; i++){
+            if(prevDiff > (abs(gearR[i] - gearRatio)){
+                foundGearGear = gearR[i] + 1;
+                prevDiff = abs(gearR[i] - gearRatio)
+            }
+            
+        }
+    
+    return foundGear;
+    
+    
+}
+
+
 ShiftController::ShiftController() { }
 
 ShiftController::~ShiftController() { }
