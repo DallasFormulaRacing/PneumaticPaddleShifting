@@ -196,25 +196,30 @@ TEST_F(ShiftControllerFixture, HighGear_ToMidGear) {
 //				            Upshift Conditions
 //**************************************************************************
 TEST_F(ShiftControllerFixture, UpshiftConditions_Satisfied) {
-    // TODO: Update test case when UpshiftConditions() is fully implemented
     rpm_ = 5001;
     EXPECT_TRUE(shift_controller_.CheckUpshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, UpshiftConditions_GearAboveThreshold) {
-    GTEST_SKIP() << "TODO: Set gear to 6 and above. Should fail.";
+    shift_controller_.SetHighGearState();
+    EXPECT_FALSE(shift_controller_.CheckUpshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, UpshiftConditions_InNeutral) {
-    GTEST_SKIP() << "TODO: Set car to neutral. Should fail.";
+    shift_controller_.SetNeutralState();
+    EXPECT_FALSE(shift_controller_.CheckUpshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, UpshiftConditions_RpmTooLow) {
-    GTEST_SKIP() << "TODO: Set rpm to 5000 and above. Should fail.";
+    rpm_ = 5000;
+    EXPECT_FALSE(shift_controller_.CheckUpshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, UpshiftConditions_WheelSpeedNotCloseEnough) {
-    GTEST_SKIP() << "TODO: Set wheel speed and rpm far apart from each. Should fail.";
+    wheel_speeds_[0] = 10.0f;
+    wheel_speeds_[1] = 30.0f;
+    rpm_ = 5001;
+    EXPECT_FALSE(shift_controller_.CheckUpshiftConditions());
 }
 
 //**************************************************************************
