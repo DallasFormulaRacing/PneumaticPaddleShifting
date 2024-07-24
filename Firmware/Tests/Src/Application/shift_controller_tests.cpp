@@ -188,7 +188,8 @@ TEST_F(ShiftControllerFixture, MidGear_ToHighGear)
 //**************************************************************************
 //				            HighGear State Cases
 //**************************************************************************
-TEST_F(ShiftControllerFixture, HighGear_IgnoreUpshiftRequest) {
+TEST_F(ShiftControllerFixture, HighGear_IgnoreUpshiftRequest) 
+{
     shift_controller_.SetHighGearState();
     EXPECT_TRUE(shift_controller_.IsHighGearState());
 
@@ -200,7 +201,8 @@ TEST_F(ShiftControllerFixture, HighGear_IgnoreUpshiftRequest) {
     EXPECT_TRUE(shift_controller_.IsHighGearState());
 }
 
-TEST_F(ShiftControllerFixture, HighGear_ToMidGear) {
+TEST_F(ShiftControllerFixture, HighGear_ToMidGear) 
+{
     shift_controller_.SetHighGearState();
     EXPECT_TRUE(shift_controller_.IsHighGearState());
 
@@ -215,27 +217,32 @@ TEST_F(ShiftControllerFixture, HighGear_ToMidGear) {
 //**************************************************************************
 //				            Upshift Conditions
 //**************************************************************************
-TEST_F(ShiftControllerFixture, UpshiftConditions_Satisfied) {
+TEST_F(ShiftControllerFixture, UpshiftConditions_Satisfied) 
+{
     rpm_ = 5001;
     EXPECT_TRUE(shift_controller_.CheckUpshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, UpshiftConditions_GearAboveThreshold) {
+TEST_F(ShiftControllerFixture, UpshiftConditions_GearAboveThreshold) 
+{
     shift_controller_.SetHighGearState();
     EXPECT_FALSE(shift_controller_.CheckUpshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, UpshiftConditions_InNeutral) {
+TEST_F(ShiftControllerFixture, UpshiftConditions_InNeutral) 
+{
     shift_controller_.SetNeutralState();
     EXPECT_FALSE(shift_controller_.CheckUpshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, UpshiftConditions_RpmTooLow) {
+TEST_F(ShiftControllerFixture, UpshiftConditions_RpmTooLow)
+{
     rpm_ = 5000;
     EXPECT_FALSE(shift_controller_.CheckUpshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, UpshiftConditions_WheelSpeedNotCloseEnough) {
+TEST_F(ShiftControllerFixture, UpshiftConditions_WheelSpeedNotCloseEnough)
+{
     wheel_speeds_[0] = 10.0f;
     wheel_speeds_[1] = 30.0f;
     rpm_ = 5001;
@@ -245,36 +252,40 @@ TEST_F(ShiftControllerFixture, UpshiftConditions_WheelSpeedNotCloseEnough) {
 //**************************************************************************
 //				            Downshift Conditions
 //**************************************************************************
-TEST_F(ShiftControllerFixture, DownshiftConditions_Satisfied) {
+TEST_F(ShiftControllerFixture, DownshiftConditions_Satisfied) 
+{
     rpm_ = 8999;
     tps_ = 31.0f;
     EXPECT_TRUE(shift_controller_.CheckDownshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, DownshiftConditions_RpmTooHigh) {
+TEST_F(ShiftControllerFixture, DownshiftConditions_RpmTooHigh) 
+{
     rpm_ = 9000;
     EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, DownshiftConditions_WheelSpeedNotCloseEnough) {
+TEST_F(ShiftControllerFixture, DownshiftConditions_WheelSpeedNotCloseEnough)
+{
     wheel_speeds_[0] = 10.0f;
     wheel_speeds_[1] = 30.0f;
     rpm_ = 8999;
     EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, DownshiftConditions_TpsTooLow) {
+TEST_F(ShiftControllerFixture, DownshiftConditions_TpsTooLow) 
+{
     rpm_ = 8999;
     tps_ = 30.0f;
     EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
 
-TEST_F(ShiftControllerFixture, DownshiftConditions_GearDisengaged) {
+TEST_F(ShiftControllerFixture, DownshiftConditions_GearDisengaged)
+{
     shift_controller_.SetNeutralState();
     rpm_ = 8999;
     tps_ = 30.0f;
     EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
-
 
 } // namespace application
