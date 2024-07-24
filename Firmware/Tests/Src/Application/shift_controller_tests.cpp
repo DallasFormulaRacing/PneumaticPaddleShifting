@@ -201,8 +201,16 @@ TEST_F(ShiftControllerFixture, HighGear_IgnoreUpshiftRequest) {
 }
 
 TEST_F(ShiftControllerFixture, HighGear_ToMidGear) {
-    GTEST_SKIP() << "TODO: \nImplement downshift.";
+    shift_controller_.SetHighGearState();
+    EXPECT_TRUE(shift_controller_.IsHighGearState());
+
+    rpm_ = 8999;
+    PerformAndCheckDownshiftRequest(true);
+
+    shift_controller_.Run();
+    EXPECT_TRUE(shift_controller_.IsMidGearState());
 }
+
 
 //**************************************************************************
 //				            Upshift Conditions
