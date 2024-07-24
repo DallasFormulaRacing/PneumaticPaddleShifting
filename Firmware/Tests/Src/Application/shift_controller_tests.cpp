@@ -160,16 +160,28 @@ TEST_F(ShiftControllerFixture, LowGear_ToMidGear) {
 //**************************************************************************
 //				            MidGear State Cases
 //**************************************************************************
-TEST_F(ShiftControllerFixture, MidGear_ToLowGear) {
-    GTEST_SKIP() << "TODO:"
-                 << "\nImplement downshift."
-                 << "Track current physical gear. Must be at 2.";
+TEST_F(ShiftControllerFixture, MidGear_ToLowGear) 
+{
+    shift_controller_.SetMidGearState();
+    EXPECT_TRUE(shift_controller_.IsMidGearState());
+
+    rpm_ = 4999;
+    PerformAndCheckDownshiftRequest(true);
+
+    shift_controller_.Run();
+    EXPECT_TRUE(shift_controller_.IsLowGearState());
 }
 
-TEST_F(ShiftControllerFixture, MidGear_ToHighGear) {
-    GTEST_SKIP() << "TODO:"
-                << "\nImplement upshift."
-                << "Track current physical gear. Must be at 5.";
+TEST_F(ShiftControllerFixture, MidGear_ToHighGear)
+{
+    shift_controller_.SetMidGearState();
+    EXPECT_TRUE(shift_controller_.IsMidGearState());
+
+    rpm_ = 5001;
+    PerformAndCheckUpshiftRequest(true);
+
+    shift_controller_.Run();
+    EXPECT_TRUE(shift_controller_.IsHighGearState());
 }
 
 
