@@ -226,26 +226,35 @@ TEST_F(ShiftControllerFixture, UpshiftConditions_WheelSpeedNotCloseEnough) {
 //				            Downshift Conditions
 //**************************************************************************
 TEST_F(ShiftControllerFixture, DownshiftConditions_Satisfied) {
-    // TODO: Update test case when DownshiftConditions() is fully implemented
     rpm_ = 8999;
     tps_ = 31.0f;
     EXPECT_TRUE(shift_controller_.CheckDownshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, DownshiftConditions_RpmTooHigh) {
-    GTEST_SKIP() << "TODO: Set rpm at 9000 and above. Should fail.";
+    rpm_ = 9000;
+    EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, DownshiftConditions_WheelSpeedNotCloseEnough) {
-    GTEST_SKIP() << "TODO: Set wheel speed and rpm far apart from each. Should fail.";
+    wheel_speeds_[0] = 10.0f;
+    wheel_speeds_[1] = 30.0f;
+    rpm_ = 8999;
+    EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, DownshiftConditions_TpsTooLow) {
-    GTEST_SKIP() << "TODO: Set tps at 30.0f and below. Should fail.";
+    rpm_ = 8999;
+    tps_ = 30.0f;
+    EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
 
 TEST_F(ShiftControllerFixture, DownshiftConditions_GearDisengaged) {
-    GTEST_SKIP() << "TODO: Set tps at 30.0f and below. Should fail.";
+    shift_controller_.SetNeutralState();
+    rpm_ = 8999;
+    tps_ = 30.0f;
+    EXPECT_FALSE(shift_controller_.CheckDownshiftConditions());
 }
+
 
 } // namespace application
