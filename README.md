@@ -2,11 +2,10 @@
 
 ## Table of Contents
 1. [Objective](#objective)
-2. [User Features](#user-features)
-3. [Hardware and Equipment](#hardware-and-equipment)
-4. [Firmware Tech Stack](#firmware-tech-stack)
-5. [Automation](#automation)
-6. [Design](#design)
+2. [Hardware and Equipment](#hardware-and-equipment)
+3. [Firmware Tech Stack](#firmware-tech-stack)
+4. [Automation](#automation)
+5. [Design](#design)
 
 ## Objective:
 - Optimize the user's response to a down-shift and up-shift command.
@@ -15,13 +14,6 @@
     - The Layered Architecture design pattern
     - Modularity of components
     - Hardware abstraction
-
-## User Features
-| Supported Logging Method | Library Completion    |
-| :----------------------- | :--------------------:|
-| Micro-SD Card            |                       |
-| USB Flash Drive          | <span>&#10004;</span> |
-| Wireless Transmission    |                       |
 
 ## Hardware and Equipment
 ### Target Device
